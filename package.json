@@ -4,8 +4,10 @@
   "license": "BSD-3-Clause",
   "type": "module",
   "scripts": {
+    "dev:build": "rollup --config --watch",
+    "dev:start": "dotenvx run -- node --watch ./dist/index.js",
+    "dev": "yarn build && concurrently 'yarn dev:build' 'yarn dev:start'",
     "build": "rollup --config",
-    "dev": "bun ./src/index.ts",
     "start": "dotenvx run -- node ./dist/index.js",
     "lint": "eslint ./src/"
   },
@@ -31,6 +33,7 @@
     "@types/node": "^24.10.4",
     "@typescript-eslint/eslint-plugin": "8.38.0",
     "@typescript-eslint/parser": "8.38.0",
+    "concurrently": "^9.2.1",
     "eslint": "^9.39.2",
     "eslint-plugin-editorconfig": "^4.0.3",
     "eslint-plugin-import": "^2.32.0",
