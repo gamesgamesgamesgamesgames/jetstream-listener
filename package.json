@@ -8,7 +8,7 @@
     "dev:start": "dotenvx run -- node --watch ./dist/index.js",
     "dev": "yarn run setup && concurrently 'yarn run dev:build' 'yarn run dev:start'",
     "build": "rollup --config",
-    "build:lexicons": "lex build --lexicons ./lexicons --out ./src/lexicons",
+    "build:lexicons": "lex build --lexicons ./lexicons --out ./src/lexicons --clear",
     "setup": "yarn run build:lexicons && yarn run build",
     "start": "dotenvx run -- node ./dist/index.js",
     "lint": "eslint ./src/"
@@ -18,6 +18,7 @@
     "@dotenvx/dotenvx": "^1.51.4",
     "@skyware/jetstream": "^0.2.5",
     "@supabase/supabase-js": "^2.89.0",
+    "algoliasearch": "^5.46.3",
     "winston": "^3.19.0",
     "winston-loki": "^6.1.3"
   },
