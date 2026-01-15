@@ -1,4 +1,38 @@
 // Module imports
-import { createLogger } from './createLogger'
+import LokiTransport from 'winston-loki'
+import winston from 'winston'
 
-export const logger = createLogger('listener')
+// Local imports
+import { generateLogMeta } from './generateLogMeta'
+
+// Constants
+const formatters = [winston.format.timestamp(), winston.format.json()]
+
+// eslint-disable-next-line no-extra-boolean-cast
+if (Boolean(process.env.PRETTY_LOGS)) {
+	formatters.push(winston.format.prettyPrint({ colorize: true }))
+}
+
+const transports = [
+	new winston.transports.Console({
+		format: winston.format.combine(...formatters),
+	}),
+]
+
+if (process.env.GRAFANA_HOST) {
+	// @ts-ignore
+	transports.push(
+		// @ts-expect-error This works fine, but the types are angry. 🤷
+		new LokiTransport({
+			basicAuth: `${process.env.GRAFANA_USERNAME}:${process.env.GRAFANA_PASSWORD}`,
+			format: winston.format.combine(...formatters),
+			host: process.env.GRAFANA_HOST,
+		}),
+	)
+}
+
+export const logger = winston.createLogger({
+	defaultMeta: generateLogMeta(),
+	level: process.env.LOG_LEVEL ?? 'info',
+	transports,
+})
