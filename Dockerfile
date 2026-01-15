@@ -23,7 +23,7 @@ FROM base AS deps
 COPY package*.json ./
 
 # Install production dependencies
-RUN --mount=type=cache,target=/root/.bun/install/cache,sharing=locked \
+RUN --mount=type=cache,id=<cache-id>,target=/root/.bun/install/cache,sharing=locked \
     bun install --frozen-lockfile --production
 
 # Set proper ownership
