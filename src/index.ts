@@ -6,6 +6,7 @@ import { handleGameCreate } from './helpers/handleGameCreate'
 import { handleGameDelete } from './helpers/handleGameDelete'
 import { handleGameUpdate } from './helpers/handleGameUpdate'
 // import { handlePostCreate } from './helpers/handlePostCreate'
+import { logger } from './helpers/logger'
 
 const jetstream = new Jetstream({
 	wantedCollections: [
@@ -18,4 +19,5 @@ jetstream.onCreate('games.gamesgamesgamesgames.game', handleGameCreate)
 jetstream.onDelete('games.gamesgamesgamesgames.game', handleGameDelete)
 jetstream.onUpdate('games.gamesgamesgamesgames.game', handleGameUpdate)
 
+logger.log('info', 'Listening for events...')
 jetstream.start()
