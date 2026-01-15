@@ -12,6 +12,7 @@
     "lint": "eslint ./src/"
   },
   "dependencies": {
+    "@atproto/lex": "^0.0.11",
     "@dotenvx/dotenvx": "^1.51.4",
     "@skyware/jetstream": "^0.2.5",
     "@supabase/supabase-js": "^2.89.0",
