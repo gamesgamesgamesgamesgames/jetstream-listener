@@ -6,8 +6,10 @@
   "scripts": {
     "dev:build": "rollup --config --watch",
     "dev:start": "dotenvx run -- node --watch ./dist/index.js",
-    "dev": "yarn build && concurrently 'yarn dev:build' 'yarn dev:start'",
+    "dev": "yarn run setup && concurrently 'yarn run dev:build' 'yarn run dev:start'",
     "build": "rollup --config",
+    "build:lexicons": "lex build --lexicons ./lexicons --out ./src/lexicons",
+    "setup": "yarn run build:lexicons && yarn run build",
     "start": "dotenvx run -- node ./dist/index.js",
     "lint": "eslint ./src/"
   },

@@ -5,12 +5,14 @@ import { type CommitCreateEvent } from '@skyware/jetstream'
 import { generateLogMeta } from './generateLogMeta'
 import { logger } from './logger'
 import { supabase } from './supabase'
+import { Main as gameLexicon } from '../lexicons/games/gamesgamesgamesgames/game'
 
 export async function handleGameCreate(
 	event: CommitCreateEvent<'games.gamesgamesgamesgames.game'>,
 ) {
 	const { commit, did } = event
 	const { collection, rev, rkey } = commit
+	const record = commit.record as gameLexicon
 
 	const uri = `at://${did}/${collection}/${rkey}`
 
@@ -33,19 +35,10 @@ export async function handleGameCreate(
 		.from('Games')
 		.upsert([
 			{
-				ownerDID: did,
-				name: record.name,
-				modes: record.modes,
-				// genres,
-				// playerPerspective,
-				summary: record.summary,
-				// theme,
-				// parent,
-				// relatedOrganizations,
-				// releaseDates,
-				type: record.type,
-				uri,
+				...record,
 				indexedAt: new Date(),
+				ownerDID: did,
+				uri,
 			},
 		])
 		.select()
